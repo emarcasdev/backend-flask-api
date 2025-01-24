@@ -33,25 +33,20 @@ def get_users():
 
 @app.route('/api/users', methods=["POST"])
 def add_user():
-    # Recuperamos los datos necesarios del front
     data = request.get_json()
     nombre = data.get("nombre")
     apellido = data.get("apellido")
     telefono = data.get("telefono")
 
     try:
-        # Contamos la cantidad de documentos existentes en la colección
         user_count = users_collection.count_documents({},)
-        # Creamos el nuevo usuario con el id incrementado
         new_user = {
             "id": user_count + 1,
             "nombre": nombre,
             "apellido": apellido,
-            "telefono": telefono
+            "tlfn": telefono
         }
-        # Insertamos el nuevo usuario en la colección
         result = users_collection.insert_one(new_user)
-        # Devolvemos el ID del nuevo documento insertado
         return jsonify({"insertedId": str(result.inserted_id)}), 201
     except Exception as e:
         print("Error al agregar el usuario:", e)
