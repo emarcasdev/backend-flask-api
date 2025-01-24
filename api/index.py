@@ -1,12 +1,14 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 users = [
-    {"id": 1, "name": "Eder"},
-    {"id": 2, "name": "David"},
-    {"id": 3, "name": "Diego"},
-    {"id": 4, "name": "Agus"}
+    {"id": 1, "nombre": "Eder", "apellido": "Martínez", "tlfn": 657543209},
+    {"id": 2, "nombre": "David", "apellido": "Puga", "tlfn": 657543209},
+    {"id": 3, "nombre": "Diego", "apellido": "Perez", "tlfn": 657543209},
+    {"id": 4, "nombre": "Agus", "apellido": "Alonso", "tlfn": 657543209}
 ]
 
 @app.route('/')
@@ -27,7 +29,7 @@ def add_user():
     users.append(new_user)
     return jsonify(new_user), 201
 
-@app.route('/api/users1', methods=["GET"])
+@app.route('/api/user1', methods=["GET"])
 def get_user_one():
     user_id = 1  
     user = next((user for user in users if user["id"] == user_id), False)
